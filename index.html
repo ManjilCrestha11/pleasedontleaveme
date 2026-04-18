@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 100 Year Promise</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <div class="emoji-rain" id="emoji-layer"></div>
+
+    <main class="wrapper">
+        <header class="vow-header">
+            <h1 class="script-font">It's still not 100 years... 😭</h1>
+            <p class="promise-quote">"Please Dont leave me babe."</p>
+        </header>
+
+        <section class="promise-container glass">
+            <div class="together-since">
+                <h3 class="mini-title">Our Journey So Far</h3>
+                <div class="counter-highlight">
+                    <span id="days-together">0</span>
+                    <p>Days Spent Together</p>
+                </div>
+            </div>
+
+            <div class="line-divider"></div>
+
+            <h2>The Promise Tracker</h2>
+            <div class="counter">
+                <div class="unit">
+                    <span id="years-left">00</span>
+                    <p>Years Left</p>
+                </div>
+                <div class="unit">
+                    <span id="days-left">00</span>
+                    <p>Days Left</p>
+                </div>
+            </div>
+            <p class="plea-text">Every day away from you feels like a lifetime.I never even thought we would break up its so hard babe without you i cant imagine my life without you in it.We have so much more of our 100 years to finish together.There is only one life and i know i will regret if i give up now i dont wanna give up and be with you in this life i wanna spend my whole life with you. Please give us one more chance.😭</p>
+        </section>
+
+        <section class="memory-wall">
+            <h2 class="section-title">Every Moment We Shared</h2>
+            <div class="photo-masonry">
+                <div class="photo-card"><img src="photo1.jpg"><p>The Beginning</p></div>
+                <div class="photo-card"><img src="photo2.jpg"><p>Our Anniversary</p></div>
+                <div class="photo-card"><img src="photo3.jpg"><p>The Happy Days</p></div>
+                <div class="photo-card"><img src="photo4.jpg"><p>My Favorite View</p></div>
+                <div class="photo-card"><img src="photo5.jpg"><p>Missing this Smile</p></div>
+                <div class="photo-card"><img src="photo6.jpg"><p>Always You</p></div>
+                <div class="photo-card"><img src="photo7.jpg"><p>Our Secret Spot</p></div>
+                <div class="photo-card"><img src="photo8.jpg"><p>Late Nights</p></div>
+                <div class="photo-card"><img src="photo9.jpg"><p>Beautiful Memories</p></div>
+                <div class="photo-card"><img src="photo10.jpg"><p>I'm Sorry</p></div>
+                <div class="photo-card"><img src="photo11.jpg"><p>For Everything</p></div>
+                <div class="photo-card"><img src="photo12.jpg"><p>Waiting for You</p></div>
+            </div>
+        </section>
+
+        <footer class="final-note">
+            <p>I promise nobody in this world will love you more than me.I Promise iam not gonna hurty you again ik i was so immature i hurted you but please give me one last chance i promise iam not gonna hurty you again      -Your Melon baby</p>
+            <div class="heart-icon">❤️</div>
+        </footer>
+    </main>
+
+    <script>
+        const startDay = new Date("2025-01-31");
+        const endDay = new Date(startDay.getFullYear() + 100, startDay.getMonth(), startDay.getDate());
+        
+        const music = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-btn");
+
+        // Logic to Play Music on ANY interaction (Click, Scroll, or Touch)
+        function startMusic() {
+            music.play().then(() => {
+                musicBtn.innerText = "⏸ Pause Music";
+                // Once music starts, remove these listeners so they don't fire again
+                window.removeEventListener('click', startMusic);
+                window.removeEventListener('touchstart', startMusic);
+                window.removeEventListener('scroll', startMusic);
+            }).catch(err => console.log("Waiting for user to interact..."));
+        }
+
+        // Add the listeners
+        window.addEventListener('click', startMusic);
+        window.addEventListener('touchstart', startMusic);
+        window.addEventListener('scroll', startMusic);
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.innerText = "⏸ Pause Music";
+            } else {
+                music.pause();
+                musicBtn.innerText = "🎵 Play Music";
+            }
+        }
+
+        function updateCounter() {
+            const now = new Date();
+            const timeSince = now - startDay;
+            const totalDays = Math.floor(timeSince / (1000 * 60 * 60 * 24));
+            document.getElementById("days-together").innerText = totalDays;
+
+            const diff = endDay - now;
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+            document.getElementById("years-left").innerText = years;
+            document.getElementById("days-left").innerText = days;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        function rain() {
+            const e = document.createElement('div');
+            e.innerText = '😭';
+            e.className = 'falling-emoji';
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.getElementById('emoji-layer').appendChild(e);
+            setTimeout(() => e.remove(), 4000);
+        }
+        setInterval(rain, 400);
+    </script>
+</body>
+</html>
